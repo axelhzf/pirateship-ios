@@ -1,15 +1,18 @@
 var React = require('react-native');
-var React = require('react-native');
 var Loading = require("./Loading");
+
 var {
   Image,
   ListView,
   StyleSheet,
   Text,
   View,
+  TouchableHighlight
 } = React;
 
-var styles = require("../styles/styles");
+var globalStyles = require("../styles/styles");
+var Movie = require("./Movie");
+
 
 var API_URL = 'http://imac:3000/api/movies';
 
@@ -63,17 +66,29 @@ var Movies = React.createClass({
 
   renderMovie(movie) {
     return (
-      <View style={styles.container}>
-        <Image
-          source={{uri: movie.images.poster.thumb}}
-          style={styles.thumbnail}
-          />
-        <View style={styles.rightContainer}>
-          <Text style={styles.title}>{movie.title}</Text>
-          <Text style={styles.year}>{movie.year}</Text>
-        </View>
+      <View>
+        <TouchableHighlight onPress={() => this.selectMovie(movie)}>
+          <View style={styles.row}>
+            <Image
+              source={{uri: movie.images.poster.thumb}}
+              style={styles.thumbnail}
+              />
+            <View style={styles.rightContainer}>
+              <Text style={styles.title}>{movie.title}</Text>
+              <Text style={styles.year}>{movie.year}</Text>
+            </View>
+          </View>
+        </TouchableHighlight>
       </View>
     );
+  },
+
+  selectMovie(movie) {
+    this.props.navigator.push({
+      title: movie.title,
+      component: Movie,
+      passProps: {movie}
+    });
   }
 
 });
@@ -85,6 +100,12 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF'
+  },
+  row: {
+    alignItems: 'center',
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    padding: 5
   },
   rightContainer: {
     flex: 1
