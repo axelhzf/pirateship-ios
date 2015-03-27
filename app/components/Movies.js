@@ -3,6 +3,10 @@ var { View, Text } = React;
 var styles = require("../styles/styles");
 
 var Movies = React.createClass({
+  statics : {
+    title: "Movies",
+    tabIcon: "ios7-film"
+  },
   render() {
     return (
       <View style={styles.content}>

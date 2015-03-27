@@ -9,7 +9,7 @@ var Downloads = require("./Downloads");
 var Tabs = React.createClass({
   getInitialState() {
     return {
-      selectedTab: "movies"
+      selectedTab: Movies.title
     }
   },
 
@@ -20,45 +20,25 @@ var Tabs = React.createClass({
   },
 
   render: function () {
-    var moviesRoute = {
-      component: Movies,
-      title: "Movies"
-    };
+    var components = [Movies, Shows, Downloads];
 
-    var tvshowsRoute = {
-      component: Shows,
-      title: "TvShows"
-    };
-
-    var downloadsRoute = {
-      component: Downloads,
-      title: "Downloads"
-    };
+    var tabs = components.map((component) => {
+      var initialRoute = {
+        component, title: component.title
+      };
+      return (
+        <TabBarIOS.Item
+          title={component.title}
+          selected={this.state.selectedTab === component.title}
+          icon={{uri: component.tabIcon}}
+          onPress={() => this.selectTab(component.title)}>
+          <NavigatorIOS initialRoute={initialRoute} style={styles.container}/>
+        </TabBarIOS.Item>
+      )
+    });
 
     return (
-      <TabBarIOS>
-        <TabBarIOS.Item
-          title="Movies"
-          selected={this.state.selectedTab === "movies"}
-          icon={{uri: "ios7-film"}}
-          onPress={() => this.selectTab('movies')}>
-          <NavigatorIOS initialRoute={moviesRoute} style={styles.container}/>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          title="TvShows"
-          selected={this.state.selectedTab === "tvshows"}
-          icon={{uri: "ios7-monitor"}}
-          onPress={() => this.selectTab('tvshows')}>
-          <NavigatorIOS initialRoute={tvshowsRoute} style={styles.container}/>
-        </TabBarIOS.Item>
-        <TabBarIOS.Item
-          title="TvShows"
-          selected={this.state.selectedTab === "downloads"}
-          icon={{uri: "ios7-cloud-download"}}
-          onPress={() => this.selectTab('downloads')}>
-          <NavigatorIOS initialRoute={downloadsRoute} style={styles.container}/>
-        </TabBarIOS.Item>
-      </TabBarIOS>
+      <TabBarIOS>{tabs}</TabBarIOS>
     )
   }
 });
