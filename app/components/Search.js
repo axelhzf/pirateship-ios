@@ -39,7 +39,6 @@ var Search = React.createClass({
     this.setState({isLoading: true});
     apiClient.get(url)
       .then((response) => {
-        console.log("response", response);
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(response),
           isLoading: false
@@ -82,7 +81,14 @@ var Search = React.createClass({
   },
 
   selectRow(torrent) {
-    console.log("downlaod", torrent);
+    var url = `torrents/download/${encodeURIComponent(torrent.link)}`;
+    apiClient.get(url)
+      .then(function () {
+        console.log("downloading");
+      })
+      .catch(function (e) {
+        console.error("error", e)
+      })
   },
 
   onSearchChange(event) {
