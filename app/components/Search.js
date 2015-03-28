@@ -83,10 +83,11 @@ var Search = React.createClass({
   selectRow(torrent) {
     var url = `torrents/download/${encodeURIComponent(torrent.link)}`;
     apiClient.get(url)
-      .then(function () {
-        console.log("downloading");
+      .then(() => {
+        // improve navigation using events?
+        this.props.route.tabs.selectTab("Downloads");
       })
-      .catch(function (e) {
+      .catch((e) => {
         console.error("error", e)
       })
   },

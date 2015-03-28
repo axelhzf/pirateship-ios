@@ -25,7 +25,9 @@ var Tabs = React.createClass({
 
     var tabs = components.map((component) => {
       var initialRoute = {
-        component, title: component.title
+        component,
+        title: component.title,
+        tabs : this
       };
       return (
         <TabBarIOS.Item
