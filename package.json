@@ -6,6 +6,9 @@
     "start": "react-native start"
   },
   "dependencies": {
-    "react-native": "^0.2.1"
+    "pretty-bytes": "^1.0.4",
+    "pretty-seconds": "^0.1.3",
+    "react-native": "^0.2.1",
+    "react-timer-mixin": "^0.13.1"
   }
 }

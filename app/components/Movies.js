@@ -14,7 +14,7 @@ var globalStyles = require("../styles/styles");
 var Movie = require("./Movie");
 
 
-var API_URL = 'http://imac:3000/api/movies';
+var API_URL = 'http://192.168.2.128:3000/api/movies';
 
 var Movies = React.createClass({
 
@@ -26,7 +26,7 @@ var Movies = React.createClass({
   getInitialState() {
     return {
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 != row
+        rowHasChanged: (row1, row2) => row1 != row2
       }),
       loaded: false
     }
@@ -67,7 +67,7 @@ var Movies = React.createClass({
   renderMovie(movie) {
     return (
       <View>
-        <TouchableHighlight onPress={() => this.selectMovie(movie)}>
+        <TouchableHighlight onPress={() => this.selectRow(movie)}>
           <View style={styles.row}>
             <Image
               source={{uri: movie.images.poster.thumb}}
@@ -83,7 +83,7 @@ var Movies = React.createClass({
     );
   },
 
-  selectMovie(movie) {
+  selectRow(movie) {
     this.props.navigator.push({
       title: movie.title,
       component: Movie,
@@ -123,9 +123,5 @@ var styles = StyleSheet.create({
     height: 81
   }
 });
-
-module.exports = Movies;
-
-
 
 module.exports = Movies;
