@@ -5,6 +5,7 @@ var styles = require("../styles/styles");
 var Movies = require("./Movies");
 var Shows = require("./Shows");
 var Downloads = require("./Downloads");
+var Search = require("./Search");
 
 var Tabs = React.createClass({
   getInitialState() {
@@ -20,7 +21,7 @@ var Tabs = React.createClass({
   },
 
   render: function () {
-    var components = [Movies, Shows, Downloads];
+    var components = [Movies, Shows, Search, Downloads];
 
     var tabs = components.map((component) => {
       var initialRoute = {
