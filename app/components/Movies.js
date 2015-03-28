@@ -8,17 +8,16 @@ var {
   Text,
   View,
   TouchableHighlight
-} = React;
+  } = React;
 
 var globalStyles = require("../styles/styles");
 var Movie = require("./Movie");
 
-
-var API_URL = 'http://192.168.2.128:3000/api/movies';
+var apiClient = require("../ApiClient");
 
 var Movies = React.createClass({
 
-  statics : {
+  statics: {
     title: "Movies",
     tabIcon: "ios7-film"
   },
@@ -37,17 +36,13 @@ var Movies = React.createClass({
   },
 
   fetchData() {
-    this.setState(this.getInitialState());
-
-    fetch(API_URL)
-      .then((response) => response.json())
-      .then((responseData) => {
+    apiClient.get("movies")
+      .then((response) => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData),
+          dataSource: this.state.dataSource.cloneWithRows(response),
           loaded: true
         });
       })
-      .done();
   },
 
   render() {

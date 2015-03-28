@@ -1,7 +1,5 @@
 var React = require('react-native');
 var Loading = require("./Loading");
-var globalStyles = require("../styles/styles");
-var Movie = require("./Movie");
 var TimerMixin = require("react-timer-mixin");
 var prettyBytes = require("pretty-bytes");
 var prettySeconds = require("pretty-seconds");
@@ -10,11 +8,10 @@ var {
   ListView,
   StyleSheet,
   Text,
-  View,
-  TouchableHighlight
+  View
   } = React;
 
-var API_URL = 'http://192.168.2.128:3000/api/downloads';
+var apiClient = require("../ApiClient");
 
 var Downloads = React.createClass({
 
@@ -42,8 +39,7 @@ var Downloads = React.createClass({
   },
 
   fetchData() {
-    fetch(API_URL)
-      .then((response) => response.json())
+      apiClient.get("downloads")
       .then((responseData) => {
         var rows = responseData;
         this.setState({
@@ -51,7 +47,6 @@ var Downloads = React.createClass({
           loaded: true
         });
       })
-      .done();
   },
 
   render() {
