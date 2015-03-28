@@ -129,12 +129,14 @@ var styles = StyleSheet.create({
   title: {
     fontSize: 15,
     marginBottom: 8,
-    marginLeft: 10,
+    paddingLeft: 8,
+    paddingRight: 8,
     flex: 1
   },
   info: {
     fontSize: 12,
-    marginLeft: 10
+    paddingLeft: 8,
+    paddingRight: 8
   },
   separator: {
     height: 1,
