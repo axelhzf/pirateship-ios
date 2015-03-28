@@ -3,6 +3,7 @@ var Loading = require("./Loading");
 var TimerMixin = require("react-timer-mixin");
 var prettyBytes = require("pretty-bytes");
 var prettySeconds = require("pretty-seconds");
+var _ = require("underscore");
 
 var {
   ListView,
@@ -17,7 +18,7 @@ var Downloads = React.createClass({
 
   mixins: [TimerMixin],
 
-  statics : {
+  statics: {
     title: "Downloads",
     tabIcon: "ios7-cloud-download"
   },
@@ -39,9 +40,11 @@ var Downloads = React.createClass({
   },
 
   fetchData() {
-      apiClient.get("downloads")
-      .then((responseData) => {
-        var rows = responseData;
+    apiClient.get("downloads")
+      .then((response) => {
+        var rows = response.map((item) => {
+          return _.pick(item, "name", "percentDone", "rateDownload", "eta");
+        });
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(rows),
           loaded: true
