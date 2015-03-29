@@ -46,16 +46,15 @@ var Movies = React.createClass({
   },
 
   render() {
-    if (!this.state.loaded) {
-      return <Loading/>
-    }
-
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderMovie}
-        style={styles.listView}
-        />
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderMovie}
+          style={styles.listView}
+          />
+        <Loading visible={!this.state.loaded}/>
+      </View>
     );
   },
 
@@ -90,11 +89,11 @@ var Movies = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF'
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
   },
   row: {
     alignItems: 'center',
