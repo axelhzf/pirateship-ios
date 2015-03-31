@@ -36,6 +36,12 @@ var Movies = React.createClass({
   },
 
   fetchData() {
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(require("../fixtures/movies")),
+      loaded: true
+    });
+
+    /*
     apiClient.get("movies")
       .then((response) => {
         this.setState({
@@ -43,6 +49,7 @@ var Movies = React.createClass({
           loaded: true
         });
       })
+      */
   },
 
   render() {
