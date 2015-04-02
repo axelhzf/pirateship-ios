@@ -4,7 +4,8 @@ var {
   Text,
   SwitchIOS,
   ScrollView,
-  AsyncStorage
+  AsyncStorage,
+  PushNotificationIOS
   } = React;
 
 const STORAGE_KEY = "SettingsState";
@@ -28,6 +29,10 @@ var Settings = React.createClass({
 
   onSwitchChange(value) {
     this.setState({notificationsEnabled: value});
+
+    if (value) {
+      PushNotificationIOS.requestPermissions();
+    }
 
     AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(this.state), (error) => {
       if (error) {
