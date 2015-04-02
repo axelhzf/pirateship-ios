@@ -7,6 +7,7 @@
     "device": "curl http://localhost:8081/app/components/App.bundle -o App.jsbundle"
   },
   "dependencies": {
+    "component-emitter": "^1.2.0",
     "pretty-bytes": "^1.0.4",
     "pretty-seconds": "^0.1.3",
     "react-native": "^0.3.4",

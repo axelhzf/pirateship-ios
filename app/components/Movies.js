@@ -12,8 +12,8 @@ var {
 
 var globalStyles = require("../styles/styles");
 var Movie = require("./Movie");
-
 var apiClient = require("../ApiClient");
+var EventEmitter = require("component-emitter");
 
 var Movies = React.createClass({
 
@@ -32,6 +32,7 @@ var Movies = React.createClass({
   },
 
   componentDidMount() {
+    this.eventEmitter = new EventEmitter();
     this.fetchData();
   },
 
@@ -88,7 +89,11 @@ var Movies = React.createClass({
     this.props.navigator.push({
       title: movie.title,
       component: Movie,
-      passProps: {movie}
+      passProps: {movie, eventEmitter: this.eventEmitter, tabs: this.props.route.tabs},
+      rightButtonTitle: "Download",
+      onRightButtonPress: () => {
+        this.eventEmitter.emit("right-button");
+      }
     });
   }
 

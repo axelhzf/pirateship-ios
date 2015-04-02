@@ -1,8 +1,45 @@
 var React = require("react-native");
 
 var {View, Text, ScrollView, Image} = React;
+var apiClient = require("../ApiClient");
+var Loading = require("./Loading");
 
 var Movie = React.createClass({
+
+  getInitialState() {
+    return {
+      loading: false
+    }
+  },
+
+  componentDidMount() {
+    if (this.props.eventEmitter) {
+      this.props.eventEmitter.on("right-button", this.onPressRightButton);
+    }
+  },
+
+  componentWillUnmount() {
+    if (this.props.eventEmitter) {
+      this.props.eventEmitter.off("right-button", this.onPressRightButton);
+    }
+  },
+
+  onPressRightButton(event) {
+    this.setState({loading: true});
+    apiClient.get(`torrents?query=${encodeURIComponent(this.props.movie.title)}`)
+      .then((torrents) => {
+        var link = torrents[0].link;
+        return apiClient.get(`torrents/download/${encodeURIComponent(link)}`)
+      })
+      .then(() => {
+        this.setState({loading: false});
+        this.props.tabs.selectTab("Downloads");
+      })
+      .catch(() => {
+        this.setState({loading: false});
+        console.error("error", e);
+      });
+  },
 
   render() {
     var movie = this.props.movie;
@@ -14,6 +51,7 @@ var Movie = React.createClass({
           <Text style={styles.subtitle}>Year: {movie.year}, Rating: {movie.rating.toFixed(1)}</Text>
           <Text style={styles.overview}>{movie.overview}</Text>
         </View>
+        <Loading visible={this.state.loading}/>
       </ScrollView>
     )
   }
@@ -22,11 +60,11 @@ var Movie = React.createClass({
 
 var styles = {
   container: {
-    flexGrow: 1
+    flex: 1
   },
   image: {
     height: 150,
-    flexGrow: 1
+    flex: 1
   },
   title: {
     fontSize: 20,
