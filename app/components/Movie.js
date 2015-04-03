@@ -1,6 +1,6 @@
 var React = require("react-native");
 
-var {View, Text, ScrollView, Image} = React;
+var {View, Text, ScrollView, Image, TouchableHighlight, LinkingIOS} = React;
 var apiClient = require("../ApiClient");
 var Loading = require("./Loading");
 
@@ -41,6 +41,11 @@ var Movie = React.createClass({
       });
   },
 
+  openTrailer() {
+    var movie = this.props.movie;
+    LinkingIOS.openURL(movie.trailer);
+  },
+
   render() {
     var movie = this.props.movie;
     return (
@@ -50,6 +55,11 @@ var Movie = React.createClass({
           <Text style={styles.title}>{movie.title}</Text>
           <Text style={styles.subtitle}>Year: {movie.year}, Rating: {movie.rating.toFixed(1)}</Text>
           <Text style={styles.overview}>{movie.overview}</Text>
+          <TouchableHighlight style={styles.buttonHighlight} onPress={() => this.openTrailer()}>
+            <View style={styles.button}>
+              <Text style={styles.buttonText}>Trailer</Text>
+            </View>
+          </TouchableHighlight>
         </View>
         <Loading visible={this.state.loading}/>
       </ScrollView>
@@ -82,6 +92,23 @@ var styles = {
     marginBottom: 10,
     marginLeft: 10,
     marginRight: 10
+  },
+  buttonHighlight: {
+    borderRadius: 5,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  button: {
+    flex: 1,
+    borderRadius: 5,
+    padding: 10,
+    borderColor: "#007AFF",
+    borderWidth: 1,
+    backgroundColor: "#ffffff"
+  },
+  buttonText: {
+    flex: 1,
+    textAlign: "center"
   }
 };
 
